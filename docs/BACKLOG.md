@@ -78,7 +78,7 @@ Acceptance criteria:
 - `.gitignore`, `.editorconfig`, and a short README covering how to run locally.
 - `Dockerfile` (multi-stage) builds the frontend, copies it into `backend/app/static`, and runs the backend, which serves the frontend for every non-`/api` path (with a fallback to `index.html` for client routes).
 
-### [ ] P0-02 Database, migrations, and the organization table
+### [x] P0-02 Database, migrations, and the organization table
 
 As a developer, I want the database connection, migrations, and test setup ready, so that features can add tables safely.
 
@@ -887,3 +887,4 @@ New ideas, bugs, and requests go here with a date and who raised them. Chris dec
 - 2026-10-29, Claude Code (P0-01): The backend's error responses still use FastAPI's default `{"detail": ...}`, not the PLAN 9.3 format `{"error": {"code", "message"}}`. No story owns the backend side. Suggest adding it to P0-04, whose client already expects that format.
 - 2026-10-29, Claude Code (P0-01): `/api/docs` and `/api/openapi.json` are reachable without signing in. Decide before P1-01's route-authentication test whether they go on its allowlist, are turned on only when `APP_ENV=local`, or are removed (`make gen-api` can export the schema without the URL).
 - 2026-10-29, Claude Code (P0-01): TypeScript is pinned to 6.0.3, not the latest 7.0, because typescript-eslint (needed for ESLint) supports only TypeScript up to 6.0. Revisit when it supports 7. P0-05's Dependabot config should ignore TypeScript major updates until then.
+- 2026-10-30, Claude Code (P0-02): The seeded organization has no allowed sign-in domains (`allowed_domains` is an empty list), so nobody can sign in until it is set. The story that builds sign-in (Phase 1) should set E Noa's domain in its bootstrap step or settings screen. Chris decides which.
