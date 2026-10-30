@@ -16,6 +16,11 @@ class Settings(BaseSettings):
     # anywhere else it stays "dev".
     git_commit: str = "dev"
 
+    # Where the database is. The default matches the Postgres container that
+    # `make dev` starts, as seen from your own computer. Staging and production
+    # set DATABASE_URL from Secret Manager.
+    database_url: str = "postgresql+psycopg://pm_system:pm_system@localhost:5432/pm_system"
+
 
 @lru_cache
 def get_settings() -> Settings:

@@ -31,4 +31,6 @@ make dev     # start Postgres, Mailpit, the backend, and the frontend
 
 Code changes reload automatically. Stop everything with Ctrl+C.
 
+The database is empty until you run `make migrate`, which creates the tables and adds E Noa as the organization. `make test` needs the Postgres container running (`make dev`); it creates and removes its own throwaway databases and never touches your development data.
+
 Other everyday commands: `make test`, `make lint`, and `make format`. The full list, with what each one runs, is in [CLAUDE.md](CLAUDE.md#commands).
