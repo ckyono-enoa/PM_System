@@ -1,0 +1,7 @@
+# Store and check out text files with LF line endings, so scripts and configs
+# behave the same on Windows, in containers, and in CI.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.ico binary

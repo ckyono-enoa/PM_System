@@ -36,7 +36,7 @@ Phases are ordered so that the app is usable after each one. There are no sprint
 
 | Phase | Name | Status |
 |---|---|---|
-| 0 | Foundations | Not started |
+| 0 | Foundations | In progress |
 | 1 | Sign-in and users | Not started |
 | 2 | Admin settings | Not started |
 | 3 | Tickets | Not started |
@@ -64,7 +64,7 @@ Goal: an empty but real app runs locally, in CI, on staging, and in production. 
 
 Related: PLAN 9, 12, 13. ADR 0001, 0002.
 
-### [ ] P0-01 Repository scaffold and local development
+### [x] P0-01 Repository scaffold and local development
 
 As a developer, I want the project skeleton and a one-command local setup, so that every later story starts from the same place.
 
@@ -884,4 +884,6 @@ Epics to break into stories when they are scheduled:
 
 New ideas, bugs, and requests go here with a date and who raised them. Chris decides where they go.
 
-- (empty)
+- 2026-10-29, Claude Code (P0-01): The backend's error responses still use FastAPI's default `{"detail": ...}`, not the PLAN 9.3 format `{"error": {"code", "message"}}`. No story owns the backend side. Suggest adding it to P0-04, whose client already expects that format.
+- 2026-10-29, Claude Code (P0-01): `/api/docs` and `/api/openapi.json` are reachable without signing in. Decide before P1-01's route-authentication test whether they go on its allowlist, are turned on only when `APP_ENV=local`, or are removed (`make gen-api` can export the schema without the URL).
+- 2026-10-29, Claude Code (P0-01): TypeScript is pinned to 6.0.3, not the latest 7.0, because typescript-eslint (needed for ESLint) supports only TypeScript up to 6.0. Revisit when it supports 7. P0-05's Dependabot config should ignore TypeScript major updates until then.
