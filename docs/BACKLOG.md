@@ -90,7 +90,7 @@ Acceptance criteria:
 - pytest fixture creates a test database, runs migrations once, and wraps each test in a rolled-back transaction.
 - A test proves migrations run from empty to latest and back down one step.
 
-### [ ] P0-03 Frontend shell and themes
+### [x] P0-03 Frontend shell and themes
 
 As a user, I want a clean layout that works on my phone and computer in light or dark mode, so that every screen built later looks consistent.
 

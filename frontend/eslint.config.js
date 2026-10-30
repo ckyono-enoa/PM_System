@@ -20,6 +20,11 @@ export default defineConfig([
       globals: globals.browser,
     },
   },
+  // shadcn/ui components export style helpers (like buttonVariants) next to the component.
+  {
+    files: ['src/components/ui/**'],
+    rules: { 'react-refresh/only-export-components': 'off' },
+  },
   // Formatting is Prettier's job; turn off ESLint rules that would argue with it.
   prettier,
 ])
