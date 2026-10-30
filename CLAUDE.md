@@ -69,7 +69,7 @@ Run from the repository root. The Makefile target is listed first, then what it 
 | First-time setup | `make setup` (installs Python deps with `uv sync` in `backend/` and npm deps with `npm ci` in `frontend/`) |
 | Run everything locally | `make dev` (`docker compose up`: Postgres, Mailpit, backend with reload, frontend dev server) |
 | All tests | `make test` (`uv run pytest` in `backend/`, `npm test` in `frontend/`) |
-| Lint and type check | `make lint` (`uv run ruff check`, `uv run ruff format --check`, `uv run mypy app`, `npm run lint`, `npm run typecheck`) |
+| Lint and type check | `make lint` (`uv run ruff check`, `uv run ruff format --check`, `uv run mypy app tests`, `npm run lint` (ESLint and Prettier check), `npm run typecheck`) |
 | Auto-format | `make format` (`uv run ruff format`, `npm run format`) |
 | Regenerate API client | `make gen-api` |
 | New migration | `make migration name=add_items_table` (`uv run alembic revision --autogenerate -m ...`) |

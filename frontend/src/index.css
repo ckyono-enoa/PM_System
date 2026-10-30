@@ -1,0 +1,17 @@
+/* Placeholder styles. Theme tokens, Tailwind, and the app shell arrive in P0-03.
+   Until then, only the browser's own light and dark system colors are used. */
+:root {
+  color-scheme: light dark;
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.5;
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}

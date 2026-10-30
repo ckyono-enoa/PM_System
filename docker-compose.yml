@@ -1,0 +1,71 @@
+# Local development: Postgres, Mailpit, the backend with auto-reload, and the
+# Vite dev server. Start it with `make dev`, then open http://localhost:5173.
+# Nothing here is used in staging or production.
+
+services:
+  db:
+    image: postgres:18
+    environment:
+      # Local-only credentials. Staging and production use Secret Manager.
+      POSTGRES_USER: pm_system
+      POSTGRES_PASSWORD: pm_system
+      POSTGRES_DB: pm_system
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pm_system -d pm_system"]
+      interval: 2s
+      timeout: 5s
+      retries: 15
+
+  mailpit:
+    image: axllent/mailpit:v1.32.0
+    ports:
+      - "8025:8025" # web inbox
+      - "1025:1025" # SMTP
+
+  backend:
+    image: ghcr.io/astral-sh/uv:0.13.6-python3.14-trixie-slim
+    working_dir: /app
+    command: uv run uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    environment:
+      # Keep the container's Linux virtualenv out of the shared folder, so it
+      # doesn't clash with the one `make setup` creates on your computer.
+      UV_PROJECT_ENVIRONMENT: /venv
+      UV_LINK_MODE: copy
+      PYTHONDONTWRITEBYTECODE: "1"
+      # File change events don't reach containers from a Windows folder.
+      WATCHFILES_FORCE_POLLING: "true"
+    volumes:
+      - ./backend:/app
+      - backend-venv:/venv
+      - uv-cache:/root/.cache/uv
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    image: node:24-slim
+    working_dir: /app
+    command: sh -c "npm ci && npm run dev -- --host 0.0.0.0"
+    environment:
+      API_PROXY_TARGET: http://backend:8000
+      VITE_USE_POLLING: "true"
+    volumes:
+      - ./frontend:/app
+      # Same idea as /venv above, for node_modules.
+      - frontend-node-modules:/app/node_modules
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+volumes:
+  db-data:
+  backend-venv:
+  uv-cache:
+  frontend-node-modules:
